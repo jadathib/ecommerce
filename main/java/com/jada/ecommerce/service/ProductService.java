@@ -4,13 +4,10 @@ import com.jada.ecommerce.model.Product;
 import com.jada.ecommerce.respository.ProductRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ProductService {
-    //CREATE NEW LIST OF THE PRODUCTS
-    private List<Product> products = new ArrayList<>();
 
     //CONSTRUCTOR INJECT REPOSITORY INTO SERVICE
     private final ProductRepository productRepository;
@@ -24,5 +21,9 @@ public class ProductService {
     public List<Product> getAllProducts (){
         //RETURN IT WITH THE REPOSITORY METHOD
         return productRepository.findAll();
+    }
+
+    public Product createProduct(Product product) {
+        return productRepository.save(product);
     }
 }
