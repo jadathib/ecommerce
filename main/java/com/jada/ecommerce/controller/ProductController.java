@@ -10,24 +10,19 @@ import java.util.List;
 @RequestMapping("/products")
 public class ProductController {
 
-    //CREATE PRODUCTSERVICE AS PRIVATE FIELD
     private final ProductService productService;
 
-    //CONSTRUCTOR INJECT
-    public ProductController (ProductService productService) {
+    public ProductController(ProductService productService) {
         this.productService = productService;
     }
 
-    //GETMAPPING
+    @PostMapping
+    public Product createProduct(@RequestBody Product product) {
+        return productService.saveProduct(product);
+    }
+
     @GetMapping
     public List<Product> getProducts() {
         return productService.getAllProducts();
     }
-
-    //POSTMAPPING
-    @PostMapping
-    public Product createProduct(@RequestBody Product product) {
-        return productService.createProduct(product);
-    }
-
 }
