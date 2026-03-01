@@ -2,12 +2,12 @@ package com.jada.ecommerce.controller;
 
 import com.jada.ecommerce.model.Product;
 import com.jada.ecommerce.service.ProductService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/products")
 public class ProductController {
 
     //CREATE PRODUCTSERVICE AS PRIVATE FIELD
@@ -19,8 +19,15 @@ public class ProductController {
     }
 
     //GETMAPPING
-    @GetMapping("/products")
+    @GetMapping
     public List<Product> getProducts() {
         return productService.getAllProducts();
     }
+
+    //POSTMAPPING
+    @PostMapping
+    public Product createProduct(@RequestBody Product product) {
+        return productService.createProduct(product);
+    }
+
 }
