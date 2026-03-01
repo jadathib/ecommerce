@@ -15,6 +15,10 @@ public class Product {
     private String name;
     private double price;
 
+    public Product() {
+
+    }
+
     // constructor
     public Product(String name, double price) {
         this.name = name;
