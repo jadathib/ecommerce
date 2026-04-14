@@ -2,10 +2,12 @@ package com.jada.ecommerce.model;
 
 import jakarta.persistence.*;
 
+//MAPS TO A DATABASE TABLE
 @Entity
 @Table(name = "product")
 public class Product {
 
+    //GENERATES AN ID VALUE
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
