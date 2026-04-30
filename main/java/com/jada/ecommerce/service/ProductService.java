@@ -26,4 +26,9 @@ public class ProductService {
     public Product getProductById(Long id) {
         return productRepository.findById(id).orElse(null);
     }
+
+    //VOID BECAUSE WE ARE DELETING AND NOT RETURNING ANYTHING
+    public void deleteProduct(Long id) {
+        productRepository.deleteById(id);
+    }
 }
