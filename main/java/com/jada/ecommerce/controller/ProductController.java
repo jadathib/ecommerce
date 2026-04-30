@@ -45,6 +45,7 @@ public class ProductController {
     public ResponseEntity<Product> getProductById(@PathVariable long id){
         //CREATE INSTANCE WITH PRODUCTSERVICE
         Product product = productService.getProductById(id);
+
         //IF PRODUCT EXISTS
         if (product != null) {
             //RETURN RESPONSEENTITY.OK
@@ -53,5 +54,47 @@ public class ProductController {
             //ELSE NOTFOUND
             return ResponseEntity.notFound().build();
         }
+    }
+
+    //UPDATE THE ENTIRE PRODUCT
+    @PutMapping("/{id}")
+    public ResponseEntity<Product> updateProduct(@PathVariable long id, @RequestBody Product updatedProduct) {
+        //CREATE INSTANCE
+        Product existingProduct = productService.getProductById(id);
+
+        //CHECK IF IT DOESN'T EXISTS
+        if (existingProduct == null) {
+            ResponseEntity.notFound().build();
+        }
+
+        //UPDATE THE NAME
+        existingProduct.setName(updatedProduct.getName());
+
+        //UPDATE THE PRICE
+        existingProduct.setPrice(updatedProduct.getPrice());
+
+        //CREATE NEW INSTANCE OF SAVED PRODUCT WITH EXISTING PRODUCT AND SAVE THE PRODUCT
+        Product savedProduct = productService.saveProduct(existingProduct);
+
+        //RETURN
+        return ResponseEntity.ok(savedProduct);
+    }
+
+    //DELETE MAPPING
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Product> removeProductById(@PathVariable long id) {
+        //CREATE INSTANCE WITH PRODUCT SERVICE
+        Product existingProduct = productService.getProductById(id);
+
+        //CHECK IF PRODUCT DOESN'T EXIST
+        if (existingProduct == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        //DELETE THE PRODUCT WITH THE PRODUCT SERVICE NOT INSTANCE
+        productService.deleteProduct(id);
+
+        //RETURN SUCCESSFUL DELETE
+        return ResponseEntity.noContent().build();
     }
 }
