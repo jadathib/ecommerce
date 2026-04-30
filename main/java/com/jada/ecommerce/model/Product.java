@@ -29,4 +29,13 @@ public class Product {
     public Long getId() { return id; }
     public String getName() { return name; }
     public double getPrice() { return price; }
+
+    //SETTERS
+    public void setName(String newName) {
+        this.name = newName;
+    }
+
+    public void setPrice(double newPrice) {
+        this.price = newPrice;
+    }
 }
