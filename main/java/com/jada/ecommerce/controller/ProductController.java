@@ -24,6 +24,7 @@ public class ProductController {
     @PostMapping
     //USE REQUEST BODY BECAUSE THAT IS WHERE THE DATA IS GOING IN THE REQUEST
     public ResponseEntity<Product> createProduct(@RequestBody Product product) {
+        //CREATE INSTANCE
         Product savedProduct = productService.saveProduct(product);
 
         //BUILD THE LOCATION OF WHERE THE PRODUCT WAS SAVED
