@@ -1,5 +1,6 @@
 package com.jada.ecommerce.controller;
 
+import com.jada.ecommerce.config.AppConfig;
 import com.jada.ecommerce.model.Product;
 import com.jada.ecommerce.service.ProductService;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,10 +16,12 @@ import java.util.List;
 @RequestMapping("/products")
 public class ProductController {
     private final ProductService productService;
+    private final AppConfig appConfig;
 
     //INJECTS PRODUCT SERVICE
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService, AppConfig appConfig) {
         this.productService = productService;
+        this.appConfig = appConfig;
     }
 
     //CREATING A PRODUCT
@@ -98,5 +101,18 @@ public class ProductController {
 
         //RETURN SUCCESSFUL DELETE
         return ResponseEntity.noContent().build();
+    }
+
+    //TAX PRICE
+    @GetMapping("/tax/{price}")
+    public double getPriceWithTax (@PathVariable double price) {
+        //RETURN PRODUCTSERVICE CALCULATE WITH PRICE
+        return productService.calculatePriceWithTax(price);
+    }
+
+    //APP CONFIG
+    @GetMapping("/app-config")
+    public AppConfig getAppConfig () {
+        return appConfig;
     }
 }
