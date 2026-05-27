@@ -61,6 +61,19 @@ public class ProductController {
         }
     }
 
+    //GET PRODUCT BY PRICE
+    @GetMapping("/price/{price}")
+    public List<Product> getProductByPrice(@PathVariable double price) {
+        return productService.getProductByPrice(price);
+    }
+
+    //GET PRODUCT BY NAME
+    @GetMapping("/name/{name}")
+    public List<Product> getProductByName(@PathVariable String name) {
+        return productService.getProductByName(name);
+    }
+
+
     //UPDATE THE ENTIRE PRODUCT
     @PutMapping("/{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable long id, @RequestBody Product updatedProduct) {
