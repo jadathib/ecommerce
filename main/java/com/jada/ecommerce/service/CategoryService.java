@@ -37,9 +37,7 @@ public class CategoryService {
     //DELETE CATEGORY
     public void deleteCategory (Long id) {
         //FIND OBJECT IN DATABASE AND ASSIGN TO CATEGORY
-        Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        "Product not found with id: " + id));
+        Category category = getCategoryById(id);
         //DELETE IT
         categoryRepository.delete(category);
     }
