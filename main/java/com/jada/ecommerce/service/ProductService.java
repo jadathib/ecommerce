@@ -2,6 +2,7 @@ package com.jada.ecommerce.service;
 
 import com.jada.ecommerce.config.AppConfig;
 import com.jada.ecommerce.exception.ResourceNotFoundException;
+import com.jada.ecommerce.model.Category;
 import com.jada.ecommerce.model.Product;
 import com.jada.ecommerce.repository.ProductRepository;
 import org.slf4j.Logger;
@@ -63,6 +64,12 @@ public class ProductService {
             throw new ResourceNotFoundException("No products found containing: " + name);
         }
         //RETURN THE PRODUCTS
+        return products;
+    }
+
+    //FIND BY CATEGORY
+    public List<Product> getProductByCategory (Category category) {
+        List<Product> products = productRepository.findByCategory(category);
         return products;
     }
 }
