@@ -1,6 +1,8 @@
 package com.jada.ecommerce.controller;
 
 import com.jada.ecommerce.config.AppConfig;
+import com.jada.ecommerce.exception.ResourceNotFoundException;
+import com.jada.ecommerce.model.Category;
 import com.jada.ecommerce.model.Product;
 import com.jada.ecommerce.service.ProductService;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,19 +48,20 @@ public class ProductController {
 
     //GET A PRODUCT BY ID
     @GetMapping("/{id}")
-    //RESPONSEENTITY<PRODUCT>
-    public ResponseEntity<Product> getProductById(@PathVariable long id){
-        //CREATE INSTANCE WITH PRODUCTSERVICE
-        Product product = productService.getProductById(id);
+    public Product getProductById(@PathVariable Long id) {
+        return productService.getProductById(id);
+    }
 
-        //IF PRODUCT EXISTS
-        if (product != null) {
-            //RETURN RESPONSEENTITY.OK
-            return ResponseEntity.ok(product);
-        } else {
-            //ELSE NOTFOUND
-            return ResponseEntity.notFound().build();
-        }
+    //GET A PRODUCT BY CATEGORY ID
+    @GetMapping("/category/{id}")
+    public List<Product> getProductByCategoryId (@PathVariable Long id) {
+        return productService.getProductByCategoryId(id);
+    }
+
+    //GET A PRODUCT BY CATEGORY NAME
+    @GetMapping("/category/name/{name}")
+    public List<Product> getProductByCategoryName (@PathVariable String name) {
+        return productService.getProductByCategoryName(name);
     }
 
     //GET PRODUCT BY PRICE
@@ -76,26 +79,11 @@ public class ProductController {
 
     //UPDATE THE ENTIRE PRODUCT
     @PutMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable long id, @RequestBody Product updatedProduct) {
-        //CREATE INSTANCE
-        Product existingProduct = productService.getProductById(id);
+    public ResponseEntity<Product> updateProduct(
+            @PathVariable Long id,
+            @RequestBody Product updatedProduct) {
 
-        //CHECK IF IT DOESN'T EXISTS
-        if (existingProduct == null) {
-            ResponseEntity.notFound().build();
-        }
-
-        //UPDATE THE NAME
-        existingProduct.setName(updatedProduct.getName());
-
-        //UPDATE THE PRICE
-        existingProduct.setPrice(updatedProduct.getPrice());
-
-        //CREATE NEW INSTANCE OF SAVED PRODUCT WITH EXISTING PRODUCT AND SAVE THE PRODUCT
-        Product savedProduct = productService.saveProduct(existingProduct);
-
-        //RETURN
-        return ResponseEntity.ok(savedProduct);
+        return ResponseEntity.ok(productService.updateProduct(id, updatedProduct));
     }
 
     //DELETE MAPPING
