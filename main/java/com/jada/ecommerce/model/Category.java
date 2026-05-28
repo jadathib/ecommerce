@@ -1,5 +1,6 @@
 package com.jada.ecommerce.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -9,12 +10,13 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private String name;
 
     //ONE CATEGORY TO MANY PRODUCTS
     @OneToMany(mappedBy = "category")
+    @JsonBackReference
     private List<Product> products;
 
     //CONSTRUCTORS
@@ -27,7 +29,7 @@ public class Category {
 
     //GETTERS & SETTERS
 
-    public long getId () {
+    public Long getId () {
         return id;
     }
 
